@@ -1,0 +1,164 @@
+# CustomerLabs Assessment
+
+This project demonstrates the creation of a basic HTTP server in Go that receives requests in a specific format, processes them using goroutines, and sends the processed data to a webhook endpoint.
+
+Request Format
+
+  The HTTP server expects incoming requests in the following JSON format:
+
+  {
+      "ev": "contact_form_submitted",
+      "et": "form_submit",
+      "id": "cl_app_id_001",
+      "uid": "cl_app_id_001-uid-001",
+      "mid": "cl_app_id_001-uid-001",
+      "t": "Vegefoods - Free Bootstrap 4 Template by Colorlib",
+      "p": "http://shielded-eyrie-45679.herokuapp.com/contact-us",
+      "l": "en-US",
+      "sc": "1920 x 1080",
+      "atrk1": "form_varient",
+      "atrv1": "red_top",
+      "atrt1": "string",
+      "atrk2": "ref",
+      "atrv2": "XPOWJRICW993LKJD",
+      "atrt2": "string",
+      "uatrk1": "name",
+      "uatrv1": "iron man",
+      "uatrt1": "string",
+      "uatrk2": "email",
+      "uatrv2": "ironman@avengers.com",
+      "uatrt2": "string",
+      "uatrk3": "age",
+      "uatrv3": "32",
+      "uatrt3": "integer"
+  }
+
+Channel and Worker
+  The server creates a Go channel to send incoming requests to a worker. The worker receives the messages from the channel, processes them concurrently, and converts them into the desired format.
+
+Converted Format
+  The converted format of the received message is as follows:
+
+  {
+    "event": "contact_form_submitted",
+    "event_type": "form_submit",
+    "app_id": "cl_app_id_001",
+    "user_id": "cl_app_id_001-uid-001",
+    "message_id": "cl_app_id_001-uid-001",
+    "page_title": "Vegefoods - Free Bootstrap 4 Template by Colorlib",
+    "page_url": "http://shielded-eyrie-45679.herokuapp.com/contact-us",
+    "browser_language": "en-US",
+    "screen_size": "1920 x 1080",
+    "attributes": {
+        "form_varient": {
+            "value": "red_top",
+            "type": "string"
+        },
+        "ref": {
+            "value": "XPOWJRICW993LKJD",
+            "type": "string"
+        }
+    },
+    "traits": {
+        "name": {
+            "value": "iron man",
+            "type": "string"
+        },
+        "email": {
+            "value": "ironman@avengers.com",
+            "type": "string"
+        },
+        "age": {
+            "value": "32",
+            "type": "integer"
+        }
+    }
+}
+
+
+Basic HTTP Server in Go
+This project demonstrates the creation of a basic HTTP server in Go that receives requests in a specific format, processes them using goroutines, and sends the processed data to a webhook endpoint.
+
+Request Format
+The HTTP server expects incoming requests in the following JSON format:
+
+json
+Copy code
+{
+    "ev": "contact_form_submitted",
+    "et": "form_submit",
+    "id": "cl_app_id_001",
+    "uid": "cl_app_id_001-uid-001",
+    "mid": "cl_app_id_001-uid-001",
+    "t": "Vegefoods - Free Bootstrap 4 Template by Colorlib",
+    "p": "http://shielded-eyrie-45679.herokuapp.com/contact-us",
+    "l": "en-US",
+    "sc": "1920 x 1080",
+    "atrk1": "form_varient",
+    "atrv1": "red_top",
+    "atrt1": "string",
+    "atrk2": "ref",
+    "atrv2": "XPOWJRICW993LKJD",
+    "atrt2": "string",
+    "uatrk1": "name",
+    "uatrv1": "iron man",
+    "uatrt1": "string",
+    "uatrk2": "email",
+    "uatrv2": "ironman@avengers.com",
+    "uatrt2": "string",
+    "uatrk3": "age",
+    "uatrv3": "32",
+    "uatrt3": "integer"
+}
+Channel and Worker
+The server creates a Go channel to send incoming requests to a worker. The worker receives the messages from the channel, processes them concurrently, and converts them into the desired format.
+
+Converted Format
+The converted format of the received message is as follows:
+
+json
+Copy code
+{
+    "event": "contact_form_submitted",
+    "event_type": "form_submit",
+    "app_id": "cl_app_id_001",
+    "user_id": "cl_app_id_001-uid-001",
+    "message_id": "cl_app_id_001-uid-001",
+    "page_title": "Vegefoods - Free Bootstrap 4 Template by Colorlib",
+    "page_url": "http://shielded-eyrie-45679.herokuapp.com/contact-us",
+    "browser_language": "en-US",
+    "screen_size": "1920 x 1080",
+    "attributes": {
+        "form_varient": {
+            "value": "red_top",
+            "type": "string"
+        },
+        "ref": {
+            "value": "XPOWJRICW993LKJD",
+            "type": "string"
+        }
+    },
+    "traits": {
+        "name": {
+            "value": "iron man",
+            "type": "string"
+        },
+        "email": {
+            "value": "ironman@avengers.com",
+            "type": "string"
+        },
+        "age": {
+            "value": "32",
+            "type": "integer"
+        }
+    }
+}
+Sending to Webhook
+  After processing, the worker sends the converted data to the webhook endpoint https://webhook.site/.
+
+Instructions
+  Clone this repository to your local machine.
+  And initialize go mod init <module_name>
+  Run the server using the command go run main.go.
+  Send HTTP POST requests to the server endpoint with the provided JSON payload format.
+  View the converted data sent to the webhook in the server logs
